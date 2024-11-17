@@ -12,6 +12,7 @@ static string ReplacePlaceholders(string template, string namespaceName, string 
         .Replace("{modelName}", modelNameLower);
 }
 
+
 /// <summary>
 /// Reads the template, replaces placeholders, and writes the output file.
 /// </summary>
