@@ -1,0 +1,81 @@
+﻿namespace {Namespace}
+{
+    public interface I{ModelName}Repository
+    {
+        Task<List<{ModelName}>> GetAll{ModelName}s();
+        Task<{ModelName}> Add{ModelName}Async({ModelName} {modelName});
+        Task<{ModelName}> Update{ModelName}Async({ModelName} {modelName});
+        Task<bool> Delete{ModelName}Async(long {modelName}Id);
+        Task<List<{ModelName}>> GetQuery(int pageIndex, int pageSize);
+        Task<{ModelName}> GetQuery(long {modelName}Id, int pageIndex, int pageSize);
+    }
+}
+
+namespace {Namespace}
+{
+    public class {ModelName}Repository : I{ModelName}Repository
+    {
+        private readonly IBaseRepository<{ModelName}, AppDbContext> _{modelName}Repo;
+
+        public {ModelName}Repository(IBaseRepository<{ModelName}, AppDbContext> {modelName}Repo)
+        {
+            _{modelName}Repo = {modelName}Repo;
+        }
+
+        public async Task<{ModelName}> Add{ModelName}Async({ModelName} {modelName})
+        {
+            try
+            {
+                await _{modelName}Repo.BeginTransactionAsync();
+
+                var result = await _{modelName}Repo.AddAsync({modelName});
+
+                await _{modelName}Repo.CommitTransactionAsync();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                await _{modelName}Repo.RollbackTransactionAsync();
+                throw;
+            }
+        }
+
+        public async Task<bool> Delete{ModelName}Async(long {modelName}Id)
+        {
+            await _{modelName}Repo.DeleteAsync({modelName}Id);
+            return true;
+        }
+
+        public async Task<List<{ModelName}>> GetAll{ModelName}s()
+        {
+            Expression<Func<{ModelName}, bool>> predicate = c => c.Id > 0;
+
+            return await _{modelName}Repo.GetAllAsync(predicate);
+        }
+
+        public async Task<List<{ModelName}>> GetQuery(int pageIndex, int pageSize)
+        {
+            return await _{modelName}Repo.QueryAsync(
+                query => query.Id > 0,
+                orderBy: c => c.CreatedDate ?? DateTime.Now,
+                pageIndex, pageSize);
+        }
+
+        public async Task<{ModelName}> GetQuery(long {modelName}Id, int pageIndex, int pageSize)
+        {
+            var result = await _{modelName}Repo.QueryAsync(
+               query => query.Id == {modelName}Id,
+               orderBy: c => c.CreatedDate,
+               pageIndex, pageSize);
+
+            return result?.FirstOrDefault();
+        }
+
+        public async Task<{ModelName}> Update{ModelName}Async({ModelName} {modelName})
+        {
+            await _{modelName}Repo.UpdateAsync({modelName});
+            return {modelName};
+        }
+    }
+}

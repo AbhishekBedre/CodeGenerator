@@ -1,0 +1,56 @@
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace {Namespace}
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class {ModelName}Controller : ControllerBase
+    {
+        private readonly ILogger<{ModelName}Controller> _logger;
+        private readonly I{ModelName}Repository _{modelName}Repository;
+
+        public {ModelName}Controller(ILogger<{ModelName}Controller> logger,
+            I{ModelName}Repository {modelName}Repository)
+        {
+            _logger = logger;
+            _{modelName}Repository = {modelName}Repository;
+        }
+
+        [HttpGet]
+        public async Task<List<{ModelName}>> Get()
+        {
+            return await _{modelName}Repository.GetAll{ModelName}s();
+        }
+
+        [HttpGet("Get{ModelName}")]
+        public async Task<{ModelName}> GetRow(long {modelName}Id, int pageIndex, int pageSize)
+        {
+            return await _{modelName}Repository.GetQuery({modelName}Id, pageIndex, pageSize);
+        }
+
+        [HttpGet("Get{ModelName}WithPagging")]
+        public async Task<List<ModelName>> Get{modelName}WithPagging(int pageIndex, int pageSize)
+        {
+            var result = await _{modelName}Repository.GetQuery(pageIndex, pageSize);
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<{ModelName}> Post({ModelName} {modelName})
+        {
+            return await _{modelName}Repository.Add{ModelName}Async({modelName});
+        }
+
+        [HttpPut]
+        public async Task<{ModelName}> Put({ModelName} {modelName})
+        {
+            return await _{modelName}Repository.Update{ModelName}Async({modelName});
+        }
+
+        [HttpDelete]
+        public async Task<bool> Delete(long {modelName}Id)
+        {
+            return await _{modelName}Repository.Delete{ModelName}Async({modelName}Id);
+        }
+    }
+}
