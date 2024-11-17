@@ -16,18 +16,30 @@ namespace {Namespace}
             _{modelName}Repository = {modelName}Repository;
         }
 
+        /// <summary>
+        /// Read all {ModelName} from table.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<List<{ModelName}>> Get()
         {
             return await _{modelName}Repository.GetAll{ModelName}s();
         }
 
+        /// <summary>
+        /// Read {ModelName} from table.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Get{ModelName}")]
         public async Task<{ModelName}> GetRow(long {modelName}Id, int pageIndex, int pageSize)
         {
             return await _{modelName}Repository.GetQuery({modelName}Id, pageIndex, pageSize);
         }
 
+        /// <summary>
+        /// Read list of {ModelName} from table.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Get{ModelName}WithPagging")]
         public async Task<List<ModelName>> Get{modelName}WithPagging(int pageIndex, int pageSize)
         {
@@ -35,18 +47,30 @@ namespace {Namespace}
             return result;
         }
 
+        /// <summary>
+        /// Create {ModelName}.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<{ModelName}> Post({ModelName} {modelName})
         {
             return await _{modelName}Repository.Add{ModelName}Async({modelName});
         }
 
+        /// <summary>
+        /// Update {ModelName}.
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         public async Task<{ModelName}> Put({ModelName} {modelName})
         {
             return await _{modelName}Repository.Update{ModelName}Async({modelName});
         }
 
+        /// <summary>
+        /// Delete {ModelName}.
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<bool> Delete(long {modelName}Id)
         {
